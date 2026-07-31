@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package wiant;
+
+option go_package = "github.com/heywinit/wiant/pkg/proto";
+
+message AgentSync {
+  string token = 1;
+  string agent_version = 2;
+  string host_id = 3;
+  hostinfo host_info = 4;
+}
+
+message ServerAck {
+  bool accepted = 1;
+  string message = 2;
+}
+
+message Ping {
+  int64 timestamp_ms = 1;
+}
+
+message Pong {
+  int64 timestamp_ms = 1;
+}
