@@ -17,5 +17,13 @@ services:
         timeout: 5s
         retries: 5
 
+  mailpit:
+    image: axllent/mailpit:v1.27
+    container_name: wiant_mailpit
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
 volumes:
   wiant_postgres_data:
