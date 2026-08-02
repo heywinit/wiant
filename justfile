@@ -22,15 +22,26 @@ dev_server:
 
 web_install:
   @echo "Installing web deps..."
-  (cd web && pnpm install)
+  (cd web && bun install)
 
 dev_web:
   @echo "Starting web dev server..."
-  (cd web && pnpm dev)
+  (cd web && bun run dev)
 
 build_web:
   @echo "Building web..."
-  (cd web && pnpm build)
+  (cd web && bun run build)
+
+generate:
+  @echo "Generating database and API clients..."
+  (cd server && sqlc generate)
+  (cd web && bun run api:generate)
+
+migrate_up:
+  (cd server && goose -dir db/migrations postgres "$DATABASE_URL" up)
+
+migrate_down:
+  (cd server && goose -dir db/migrations postgres "$DATABASE_URL" down)
 
 # Full local dev stack: agent + server + web
 dev:
@@ -38,7 +49,7 @@ dev:
   # Run in background; adjust to your preference (tmux, systemd, etc.)
   (cd agent && go run ./...) &
   (cd server && go run ./...) &
-  (cd web && pnpm dev)
+  (cd web && bun run dev)
 
 # Run only backend (agent + server)
 dev_backend:
@@ -58,14 +69,14 @@ fmt:
   (cd agent && go fmt ./...)
   (cd server && go fmt ./...)
   @echo "Formatting/linting web..."
-  (cd web && pnpm lint)
-  (cd web && pnpm format)
+  (cd web && bun run lint)
+  (cd web && bun run format)
 
 clean:
   @echo "Cleaning Go binaries..."
   rm -rf bin
   @echo "Cleaning web build..."
-  (cd web && pnpm clean || true)
+  (cd web && bun run clean || true)
 
 default:
   @just --list --justfile {{justfile()}}
