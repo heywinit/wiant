@@ -7,9 +7,9 @@ CREATE TABLE hosts (
 CREATE TABLE agents (
     agent_id BIGSERIAL PRIMARY KEY,
     name TEXT NOT NULL,
-    host_id BIGSERIAL references hosts(agent_id)
+    host_id BIGINT NOT NULL REFERENCES hosts(host_id)
 );
 
 -- +goose Down
-DROP TABLE hosts;
 DROP TABLE agents;
+DROP TABLE hosts;
