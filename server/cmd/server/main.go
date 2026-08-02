@@ -12,6 +12,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/heywinit/wiant/server/config"
+	"github.com/heywinit/wiant/server/internal/auth"
 	wiantMiddleware "github.com/heywinit/wiant/server/internal/middleware"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -40,7 +41,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	server := &http.Server{Addr: cfg.Address, Handler: prepareHandler(logger), ReadHeaderTimeout: 10 * time.Second}
+	server := &http.Server{Addr: cfg.Address, Handler: prepareHandler(cfg, pool, logger), ReadHeaderTimeout: 10 * time.Second}
 
 	go func() {
 		logger.Info("started http server", "address", cfg.Address)
@@ -59,11 +60,16 @@ func main() {
 	}
 }
 
-func prepareHandler(logger *slog.Logger) http.Handler {
+func prepareHandler(cfg config.Config, pool *pgxpool.Pool, logger *slog.Logger) http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID, middleware.ClientIPFromRemoteAddr, wiantMiddleware.RequestLogger(logger), middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
+
+	authHandler := auth.NewHandler(cfg, auth.NewStore(pool), auth.NewSMTPMailer(cfg), logger)
+	r.Route("/api/v1", func(r chi.Router) {
+		r.With(authHandler.CORS).Mount("/auth", authHandler.Routes())
+	})
 
 	r.Get("/healthz", func(w http.ResponseWriter, _ *http.Request) {
 		_, _ = w.Write([]byte("wiant"))

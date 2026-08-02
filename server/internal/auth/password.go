@@ -40,8 +40,8 @@ func validatePassword(password string) (string, error) {
 	password = norm.NFC.String(password)
 	length := utf8.RuneCountInString(password)
 
-	if length < 15 || length > 128 {
-		return "", errors.New("password must be between 15 and 128 characters")
+	if length < 8 || length > 128 {
+		return "", errors.New("password must be between 8 and 128 characters")
 	}
 
 	return password, nil
@@ -83,22 +83,22 @@ func verifyPassword(encoded, password string) bool {
 	if len(parts) != 6 || parts[1] != "argon2id" || parts[2] != "v=19" {
 		return false
 	}
-	
+
 	var memory uint64
 	var iterations uint64
 	var parallelism uint64
-	
+
 	for item := range strings.SplitSeq(parts[3], ",") {
 		pair := strings.SplitN(item, "=", 2)
 		if len(pair) != 2 {
 			return false
 		}
-		
+
 		value, err := strconv.ParseUint(pair[1], 10, 32)
 		if err != nil {
 			return false
 		}
-		
+
 		switch pair[0] {
 		case "m":
 			memory = value
@@ -108,17 +108,17 @@ func verifyPassword(encoded, password string) bool {
 			parallelism = value
 		}
 	}
-	
+
 	salt, err := base64.RawStdEncoding.DecodeString(parts[4])
 	if err != nil {
 		return false
 	}
-	
+
 	expected, err := base64.RawStdEncoding.DecodeString(parts[5])
 	if err != nil {
 		return false
 	}
-	
+
 	normalized := norm.NFC.String(password)
 	actual := argon2.IDKey([]byte(normalized), salt, uint32(iterations), uint32(memory), uint8(parallelism), uint32(len(expected)))
 	return subtle.ConstantTimeCompare(actual, expected) == 1
