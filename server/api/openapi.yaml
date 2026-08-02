@@ -1,0 +1,212 @@
+openapi: 3.1.0
+info:
+  title: Wiant API
+  version: 0.1.0
+servers:
+  - url: /api/v1
+paths:
+  /auth/csrf:
+    get:
+      operationId: getCsrf
+      responses:
+        "200":
+          description: CSRF token
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/CsrfResponse" }
+  /auth/register:
+    post:
+      operationId: register
+      security: [{ csrf: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Credentials" }
+      responses:
+        "202": { $ref: "#/components/responses/Accepted" }
+        "422": { $ref: "#/components/responses/Error" }
+  /auth/login:
+    post:
+      operationId: login
+      security: [{ csrf: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Credentials" }
+      responses:
+        "200": { $ref: "#/components/responses/Session" }
+        "401": { $ref: "#/components/responses/Error" }
+        "403": { $ref: "#/components/responses/Error" }
+  /auth/logout:
+    post:
+      operationId: logout
+      security: [{ csrf: [] }]
+      responses:
+        "204": { description: Logged out }
+  /auth/session:
+    get:
+      operationId: getSession
+      responses:
+        "200": { $ref: "#/components/responses/Session" }
+  /auth/email/verification/request:
+    post:
+      operationId: requestEmailVerification
+      security: [{ csrf: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EmailRequest" }
+      responses:
+        "202": { $ref: "#/components/responses/Accepted" }
+  /auth/email/verification/confirm:
+    post:
+      operationId: confirmEmailVerification
+      security: [{ csrf: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/TokenRequest" }
+      responses:
+        "200": { $ref: "#/components/responses/Session" }
+        "422": { $ref: "#/components/responses/Error" }
+  /auth/password/forgot:
+    post:
+      operationId: forgotPassword
+      security: [{ csrf: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/EmailRequest" }
+      responses:
+        "202": { $ref: "#/components/responses/Accepted" }
+  /auth/password/reset:
+    post:
+      operationId: resetPassword
+      security: [{ csrf: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [token, password]
+              properties:
+                token: { type: string }
+                password: { type: string, minLength: 15, maxLength: 128 }
+      responses:
+        "200": { $ref: "#/components/responses/Session" }
+        "422": { $ref: "#/components/responses/Error" }
+  /auth/oauth/{provider}/start:
+    get:
+      operationId: startOAuth
+      parameters:
+        - in: path
+          name: provider
+          required: true
+          schema: { $ref: "#/components/schemas/OAuthProvider" }
+        - in: query
+          name: intent
+          schema: { type: string, enum: [login, link], default: login }
+        - in: query
+          name: returnTo
+          schema: { type: string, default: / }
+      responses:
+        "302": { description: Redirect to the provider }
+  /auth/oauth/{provider}/callback:
+    get:
+      operationId: finishOAuth
+      parameters:
+        - in: path
+          name: provider
+          required: true
+          schema: { $ref: "#/components/schemas/OAuthProvider" }
+        - in: query
+          name: state
+          required: true
+          schema: { type: string }
+        - in: query
+          name: code
+          schema: { type: string }
+        - in: query
+          name: error
+          schema: { type: string }
+      responses:
+        "302": { description: Redirect to the web application }
+components:
+  securitySchemes:
+    csrf:
+      type: apiKey
+      in: header
+      name: X-CSRF-Token
+  schemas:
+    OAuthProvider: { type: string, enum: [google, github] }
+    CsrfResponse:
+      type: object
+      required: [token]
+      properties: { token: { type: string } }
+    Credentials:
+      type: object
+      additionalProperties: false
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, minLength: 15, maxLength: 128 }
+    EmailRequest:
+      type: object
+      additionalProperties: false
+      required: [email]
+      properties: { email: { type: string, format: email } }
+    TokenRequest:
+      type: object
+      additionalProperties: false
+      required: [token]
+      properties: { token: { type: string } }
+    User:
+      type: object
+      required: [id, email]
+      properties:
+        id: { type: integer, format: int64 }
+        email: { type: string, format: email }
+        emailVerifiedAt: { type: [string, "null"], format: date-time }
+    Session:
+      type: object
+      required: [user, providers]
+      properties:
+        user: { oneOf: [{ $ref: "#/components/schemas/User" }, { type: "null" }] }
+        providers:
+          type: array
+          items: { type: string, enum: [password, google, github] }
+    Accepted:
+      type: object
+      required: [status]
+      properties: { status: { type: string } }
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string }
+        message: { type: string }
+        fields:
+          type: object
+          additionalProperties: { type: string }
+  responses:
+    Session:
+      description: Current authentication session
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Session" }
+    Accepted:
+      description: Request accepted
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Accepted" }
+    Error:
+      description: Request error
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/Error" }
