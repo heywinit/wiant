@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:18
+    container_name: wiant_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wiant
+      POSTGRES_PASSWORD: wiant
+      POSTGRES_DB: wiant_db
+    ports:
+      - "27110:5432"
+    volumes:
+      - wiant_postgres_data:/var/lib/postgresql
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U wiant_db"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+
+volumes:
+  wiant_postgres_data:

@@ -11,6 +11,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/jackc/pgx/v5"
 
 	wiantMiddleware "github.com/heywinit/wiant/server/internal/middleware"
 )
@@ -30,6 +31,14 @@ func main() {
 		Addr: ":3000",
 		Handler: handler,
 	}
+
+	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+
+	if err != nil {
+		logger.Info("unable to connect to database", "err" , err)
+		os.Exit(1)
+	}
+	defer conn.Close(ctx)
 
 	go func() {
 		logger.Info("started http server", "port", 3000)
