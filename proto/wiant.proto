@@ -8,7 +8,7 @@ message AgentSync {
   string token = 1;
   string agent_version = 2;
   string host_id = 3;
-  hostinfo host_info = 4;
+  HostInfo host_info = 4;
 }
 
 message ServerAck {
@@ -22,4 +22,13 @@ message Ping {
 
 message Pong {
   int64 timestamp_ms = 1;
+}
+
+message HostInfo {
+  string os = 1;
+  string architecture = 2;
+  string docker_version = 3;
+  int64 total_memory_bytes = 4;
+  int32 cpu_count = 5;
+  repeated string available_disk_paths = 6;
 }
