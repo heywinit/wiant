@@ -66,6 +66,7 @@ function LoginPage() {
 			<LoginForm
 				onSubmit={submit}
 				onClickCapture={click}
+				submitPending={form.formState.isSubmitting}
 				emailInputProps={form.register("email", {
 					required: "Email is required",
 					pattern: {

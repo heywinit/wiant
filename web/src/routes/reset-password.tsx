@@ -1,3 +1,5 @@
+import { Loading03Icon } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
 import { createFileRoute } from "@tanstack/react-router"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -74,8 +76,21 @@ function ResetPasswordPage() {
 						/>
 					</Field>
 					<Field>
-						<Button type="submit" disabled={pending || !token}>
-							{pending ? "Working…" : "Reset password"}
+						<Button
+							type="submit"
+							disabled={pending || !token}
+							aria-label={pending ? "Reset password pending" : undefined}
+						>
+							{pending ? (
+								<HugeiconsIcon
+									icon={Loading03Icon}
+									strokeWidth={2}
+									className="animate-spin"
+									aria-hidden="true"
+								/>
+							) : (
+								"Reset password"
+							)}
 						</Button>
 					</Field>
 				</FieldGroup>

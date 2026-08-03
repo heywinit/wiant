@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router"
 import { type MouseEvent, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { AuthShell } from "@/components/auth-shell"
@@ -13,7 +13,6 @@ function RegisterPage() {
 		mode: "onSubmit",
 	})
 	const [pending, setPending] = useState(false)
-	const [sent, setSent] = useState(false)
 
 	useEffect(() => {
 		const authToast = new URLSearchParams(window.location.search).get(
@@ -28,7 +27,11 @@ function RegisterPage() {
 		setPending(true)
 		try {
 			await register(email, password)
-			setSent(true)
+			toast.add({
+				title: "Check your inbox",
+				description: "Your verification link expires in 24 hours.",
+				type: "success",
+			})
 		} catch (cause) {
 			toast.add({
 				title: "Registration failed",
@@ -63,66 +66,40 @@ function RegisterPage() {
 
 	return (
 		<AuthShell>
-			{sent ? (
-				<div className="flex flex-col gap-6">
-					<div className="flex flex-col items-center gap-1 text-center">
-						<h1 className="font-bold text-2xl">Check your inbox</h1>
-						<p className="text-balance text-muted-foreground text-sm">
-							Your verification link expires in 24 hours.
-						</p>
-					</div>
-					<p className="rounded-md bg-primary/10 p-4 text-sm">
-						Check your inbox for a verification link.
-					</p>
-					<Link
-						className="text-center text-sm underline underline-offset-4"
-						to="/login"
-					>
-						Back to login
-					</Link>
-				</div>
-			) : (
-				<>
-					<LoginForm
-						title="Create your account"
-						description="Enter your email below to create your account"
-						submitLabel="Create account"
-						googleLabel="Continue with Google"
-						githubLabel="Continue with GitHub"
-						showForgotPassword={false}
-						footerPrompt="Already have an account?"
-						footerLinkLabel="Login"
-						footerLinkTo="/login"
-						onSubmit={submit}
-						onClickCapture={click}
-						emailInputProps={form.register("email", {
-							required: "Email is required",
-							pattern: {
-								value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-								message: "Enter a valid email address",
-							},
-						})}
-						emailError={form.formState.errors.email?.message}
-						passwordInputProps={form.register("password", {
-							required: "Password is required",
-							minLength: {
-								value: 8,
-								message: "Use at least 8 characters",
-							},
-							maxLength: {
-								value: 128,
-								message: "Use 128 characters or fewer",
-							},
-						})}
-						passwordError={form.formState.errors.password?.message}
-					/>
-					{pending && (
-						<p className="mt-4 text-center text-muted-foreground text-sm">
-							Working…
-						</p>
-					)}
-				</>
-			)}
+			<LoginForm
+				title="Create your account"
+				description="Enter your email below to create your account"
+				submitLabel="Create account"
+				googleLabel="Continue with Google"
+				githubLabel="Continue with GitHub"
+				showForgotPassword={false}
+				footerPrompt="Already have an account?"
+				footerLinkLabel="Login"
+				footerLinkTo="/login"
+				onSubmit={submit}
+				onClickCapture={click}
+				submitPending={pending}
+				emailInputProps={form.register("email", {
+					required: "Email is required",
+					pattern: {
+						value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+						message: "Enter a valid email address",
+					},
+				})}
+				emailError={form.formState.errors.email?.message}
+				passwordInputProps={form.register("password", {
+					required: "Password is required",
+					minLength: {
+						value: 8,
+						message: "Use at least 8 characters",
+					},
+					maxLength: {
+						value: 128,
+						message: "Use 128 characters or fewer",
+					},
+				})}
+				passwordError={form.formState.errors.password?.message}
+			/>
 		</AuthShell>
 	)
 }

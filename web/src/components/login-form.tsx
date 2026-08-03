@@ -1,16 +1,18 @@
-import { Button } from "@/components/ui/button";
-import { GitHubLogo } from "@/components/icons/github-logo";
-import { GoogleLogo } from "@/components/icons/google-logo";
-import { FormTooltipInput } from "@/components/form-tooltip-input";
+import { Loading03Icon } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Link } from "@tanstack/react-router"
+import { FormTooltipInput } from "@/components/form-tooltip-input"
+import { GitHubLogo } from "@/components/icons/github-logo"
+import { GoogleLogo } from "@/components/icons/google-logo"
+import { Button } from "@/components/ui/button"
 import {
 	Field,
 	FieldDescription,
 	FieldGroup,
 	FieldLabel,
 	FieldSeparator,
-} from "@/components/ui/field";
-import { cn } from "@/lib/utils";
-import { Link } from "@tanstack/react-router";
+} from "@/components/ui/field"
+import { cn } from "@/lib/utils"
 
 export function LoginForm({
 	className,
@@ -21,6 +23,7 @@ export function LoginForm({
 	title = "Login to your account",
 	description = "Enter your email below to login to your account",
 	submitLabel = "Login",
+	submitPending = false,
 	googleLabel = "Continue with Google",
 	githubLabel = "Continue with GitHub",
 	showForgotPassword = true,
@@ -36,6 +39,7 @@ export function LoginForm({
 	title?: string
 	description?: string
 	submitLabel?: string
+	submitPending?: boolean
 	googleLabel?: string
 	githubLabel?: string
 	showForgotPassword?: boolean
@@ -84,7 +88,22 @@ export function LoginForm({
 					/>
 				</Field>
 				<Field>
-					<Button type="submit">{submitLabel}</Button>
+					<Button
+						type="submit"
+						disabled={submitPending}
+						aria-label={submitPending ? `${submitLabel} pending` : undefined}
+					>
+						{submitPending ? (
+							<HugeiconsIcon
+								icon={Loading03Icon}
+								strokeWidth={2}
+								className="animate-spin"
+								aria-hidden="true"
+							/>
+						) : (
+							submitLabel
+						)}
+					</Button>
 				</Field>
 				<FieldSeparator>Or continue with</FieldSeparator>
 				<Field>
@@ -105,5 +124,5 @@ export function LoginForm({
 				</Field>
 			</FieldGroup>
 		</form>
-	);
+	)
 }

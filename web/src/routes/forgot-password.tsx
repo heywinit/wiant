@@ -1,3 +1,5 @@
+import { Loading03Icon } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -75,8 +77,21 @@ function ForgotPasswordPage() {
 								/>
 							</Field>
 							<Field>
-								<Button type="submit" disabled={pending}>
-									{pending ? "Working…" : "Send reset link"}
+								<Button
+									type="submit"
+									disabled={pending}
+									aria-label={pending ? "Send reset link pending" : undefined}
+								>
+									{pending ? (
+										<HugeiconsIcon
+											icon={Loading03Icon}
+											strokeWidth={2}
+											className="animate-spin"
+											aria-hidden="true"
+										/>
+									) : (
+										"Send reset link"
+									)}
 								</Button>
 							</Field>
 						</FieldGroup>

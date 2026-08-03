@@ -1,3 +1,5 @@
+import { Loading03Icon } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react"
 import { createFileRoute } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -110,8 +112,23 @@ function VerifyEmailPage() {
 										/>
 									</Field>
 									<Field>
-										<Button type="submit" disabled={pending}>
-											{pending ? "Working…" : "Resend verification"}
+										<Button
+											type="submit"
+											disabled={pending}
+											aria-label={
+												pending ? "Resend verification pending" : undefined
+											}
+										>
+											{pending ? (
+												<HugeiconsIcon
+													icon={Loading03Icon}
+													strokeWidth={2}
+													className="animate-spin"
+													aria-hidden="true"
+												/>
+											) : (
+												"Resend verification"
+											)}
 										</Button>
 									</Field>
 								</FieldGroup>
