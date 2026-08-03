@@ -10,33 +10,262 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
+import { Route as AuthCallbackRouteImport } from './routes/auth/callback'
+import { Route as ApiV1AuthCsrfRouteImport } from './routes/api/v1/auth/csrf'
+import { Route as ApiV1AuthLoginRouteImport } from './routes/api/v1/auth/login'
+import { Route as ApiV1AuthLogoutRouteImport } from './routes/api/v1/auth/logout'
+import { Route as ApiV1AuthRegisterRouteImport } from './routes/api/v1/auth/register'
+import { Route as ApiV1AuthSessionRouteImport } from './routes/api/v1/auth/session'
+import { Route as ApiV1AuthPasswordForgotRouteImport } from './routes/api/v1/auth/password/forgot'
+import { Route as ApiV1AuthPasswordResetRouteImport } from './routes/api/v1/auth/password/reset'
+import { Route as ApiV1AuthEmailVerificationConfirmRouteImport } from './routes/api/v1/auth/email/verification/confirm'
+import { Route as ApiV1AuthEmailVerificationRequestRouteImport } from './routes/api/v1/auth/email/verification/request'
+import { Route as ApiV1AuthOauthProviderCallbackRouteImport } from './routes/api/v1/auth/oauth/$provider/callback'
+import { Route as ApiV1AuthOauthProviderStartRouteImport } from './routes/api/v1/auth/oauth/$provider/start'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthCsrfRoute = ApiV1AuthCsrfRouteImport.update({
+  id: '/api/v1/auth/csrf',
+  path: '/api/v1/auth/csrf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthLoginRoute = ApiV1AuthLoginRouteImport.update({
+  id: '/api/v1/auth/login',
+  path: '/api/v1/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthLogoutRoute = ApiV1AuthLogoutRouteImport.update({
+  id: '/api/v1/auth/logout',
+  path: '/api/v1/auth/logout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthRegisterRoute = ApiV1AuthRegisterRouteImport.update({
+  id: '/api/v1/auth/register',
+  path: '/api/v1/auth/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthSessionRoute = ApiV1AuthSessionRouteImport.update({
+  id: '/api/v1/auth/session',
+  path: '/api/v1/auth/session',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthPasswordForgotRoute = ApiV1AuthPasswordForgotRouteImport.update({
+  id: '/api/v1/auth/password/forgot',
+  path: '/api/v1/auth/password/forgot',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthPasswordResetRoute = ApiV1AuthPasswordResetRouteImport.update({
+  id: '/api/v1/auth/password/reset',
+  path: '/api/v1/auth/password/reset',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1AuthEmailVerificationConfirmRoute =
+  ApiV1AuthEmailVerificationConfirmRouteImport.update({
+    id: '/api/v1/auth/email/verification/confirm',
+    path: '/api/v1/auth/email/verification/confirm',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiV1AuthEmailVerificationRequestRoute =
+  ApiV1AuthEmailVerificationRequestRouteImport.update({
+    id: '/api/v1/auth/email/verification/request',
+    path: '/api/v1/auth/email/verification/request',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiV1AuthOauthProviderCallbackRoute =
+  ApiV1AuthOauthProviderCallbackRouteImport.update({
+    id: '/api/v1/auth/oauth/$provider/callback',
+    path: '/api/v1/auth/oauth/$provider/callback',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiV1AuthOauthProviderStartRoute =
+  ApiV1AuthOauthProviderStartRouteImport.update({
+    id: '/api/v1/auth/oauth/$provider/start',
+    path: '/api/v1/auth/oauth/$provider/start',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/api/v1/auth/csrf': typeof ApiV1AuthCsrfRoute
+  '/api/v1/auth/login': typeof ApiV1AuthLoginRoute
+  '/api/v1/auth/logout': typeof ApiV1AuthLogoutRoute
+  '/api/v1/auth/register': typeof ApiV1AuthRegisterRoute
+  '/api/v1/auth/session': typeof ApiV1AuthSessionRoute
+  '/api/v1/auth/password/forgot': typeof ApiV1AuthPasswordForgotRoute
+  '/api/v1/auth/password/reset': typeof ApiV1AuthPasswordResetRoute
+  '/api/v1/auth/email/verification/confirm': typeof ApiV1AuthEmailVerificationConfirmRoute
+  '/api/v1/auth/email/verification/request': typeof ApiV1AuthEmailVerificationRequestRoute
+  '/api/v1/auth/oauth/$provider/callback': typeof ApiV1AuthOauthProviderCallbackRoute
+  '/api/v1/auth/oauth/$provider/start': typeof ApiV1AuthOauthProviderStartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/api/v1/auth/csrf': typeof ApiV1AuthCsrfRoute
+  '/api/v1/auth/login': typeof ApiV1AuthLoginRoute
+  '/api/v1/auth/logout': typeof ApiV1AuthLogoutRoute
+  '/api/v1/auth/register': typeof ApiV1AuthRegisterRoute
+  '/api/v1/auth/session': typeof ApiV1AuthSessionRoute
+  '/api/v1/auth/password/forgot': typeof ApiV1AuthPasswordForgotRoute
+  '/api/v1/auth/password/reset': typeof ApiV1AuthPasswordResetRoute
+  '/api/v1/auth/email/verification/confirm': typeof ApiV1AuthEmailVerificationConfirmRoute
+  '/api/v1/auth/email/verification/request': typeof ApiV1AuthEmailVerificationRequestRoute
+  '/api/v1/auth/oauth/$provider/callback': typeof ApiV1AuthOauthProviderCallbackRoute
+  '/api/v1/auth/oauth/$provider/start': typeof ApiV1AuthOauthProviderStartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/verify-email': typeof VerifyEmailRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/api/v1/auth/csrf': typeof ApiV1AuthCsrfRoute
+  '/api/v1/auth/login': typeof ApiV1AuthLoginRoute
+  '/api/v1/auth/logout': typeof ApiV1AuthLogoutRoute
+  '/api/v1/auth/register': typeof ApiV1AuthRegisterRoute
+  '/api/v1/auth/session': typeof ApiV1AuthSessionRoute
+  '/api/v1/auth/password/forgot': typeof ApiV1AuthPasswordForgotRoute
+  '/api/v1/auth/password/reset': typeof ApiV1AuthPasswordResetRoute
+  '/api/v1/auth/email/verification/confirm': typeof ApiV1AuthEmailVerificationConfirmRoute
+  '/api/v1/auth/email/verification/request': typeof ApiV1AuthEmailVerificationRequestRoute
+  '/api/v1/auth/oauth/$provider/callback': typeof ApiV1AuthOauthProviderCallbackRoute
+  '/api/v1/auth/oauth/$provider/start': typeof ApiV1AuthOauthProviderStartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/verify-email'
+    | '/auth/callback'
+    | '/api/v1/auth/csrf'
+    | '/api/v1/auth/login'
+    | '/api/v1/auth/logout'
+    | '/api/v1/auth/register'
+    | '/api/v1/auth/session'
+    | '/api/v1/auth/password/forgot'
+    | '/api/v1/auth/password/reset'
+    | '/api/v1/auth/email/verification/confirm'
+    | '/api/v1/auth/email/verification/request'
+    | '/api/v1/auth/oauth/$provider/callback'
+    | '/api/v1/auth/oauth/$provider/start'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/verify-email'
+    | '/auth/callback'
+    | '/api/v1/auth/csrf'
+    | '/api/v1/auth/login'
+    | '/api/v1/auth/logout'
+    | '/api/v1/auth/register'
+    | '/api/v1/auth/session'
+    | '/api/v1/auth/password/forgot'
+    | '/api/v1/auth/password/reset'
+    | '/api/v1/auth/email/verification/confirm'
+    | '/api/v1/auth/email/verification/request'
+    | '/api/v1/auth/oauth/$provider/callback'
+    | '/api/v1/auth/oauth/$provider/start'
+  id:
+    | '__root__'
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/verify-email'
+    | '/auth/callback'
+    | '/api/v1/auth/csrf'
+    | '/api/v1/auth/login'
+    | '/api/v1/auth/logout'
+    | '/api/v1/auth/register'
+    | '/api/v1/auth/session'
+    | '/api/v1/auth/password/forgot'
+    | '/api/v1/auth/password/reset'
+    | '/api/v1/auth/email/verification/confirm'
+    | '/api/v1/auth/email/verification/request'
+    | '/api/v1/auth/oauth/$provider/callback'
+    | '/api/v1/auth/oauth/$provider/start'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
+  ApiV1AuthCsrfRoute: typeof ApiV1AuthCsrfRoute
+  ApiV1AuthLoginRoute: typeof ApiV1AuthLoginRoute
+  ApiV1AuthLogoutRoute: typeof ApiV1AuthLogoutRoute
+  ApiV1AuthRegisterRoute: typeof ApiV1AuthRegisterRoute
+  ApiV1AuthSessionRoute: typeof ApiV1AuthSessionRoute
+  ApiV1AuthPasswordForgotRoute: typeof ApiV1AuthPasswordForgotRoute
+  ApiV1AuthPasswordResetRoute: typeof ApiV1AuthPasswordResetRoute
+  ApiV1AuthEmailVerificationConfirmRoute: typeof ApiV1AuthEmailVerificationConfirmRoute
+  ApiV1AuthEmailVerificationRequestRoute: typeof ApiV1AuthEmailVerificationRequestRoute
+  ApiV1AuthOauthProviderCallbackRoute: typeof ApiV1AuthOauthProviderCallbackRoute
+  ApiV1AuthOauthProviderStartRoute: typeof ApiV1AuthOauthProviderStartRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +277,149 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/csrf': {
+      id: '/api/v1/auth/csrf'
+      path: '/api/v1/auth/csrf'
+      fullPath: '/api/v1/auth/csrf'
+      preLoaderRoute: typeof ApiV1AuthCsrfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/login': {
+      id: '/api/v1/auth/login'
+      path: '/api/v1/auth/login'
+      fullPath: '/api/v1/auth/login'
+      preLoaderRoute: typeof ApiV1AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/logout': {
+      id: '/api/v1/auth/logout'
+      path: '/api/v1/auth/logout'
+      fullPath: '/api/v1/auth/logout'
+      preLoaderRoute: typeof ApiV1AuthLogoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/register': {
+      id: '/api/v1/auth/register'
+      path: '/api/v1/auth/register'
+      fullPath: '/api/v1/auth/register'
+      preLoaderRoute: typeof ApiV1AuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/session': {
+      id: '/api/v1/auth/session'
+      path: '/api/v1/auth/session'
+      fullPath: '/api/v1/auth/session'
+      preLoaderRoute: typeof ApiV1AuthSessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/password/forgot': {
+      id: '/api/v1/auth/password/forgot'
+      path: '/api/v1/auth/password/forgot'
+      fullPath: '/api/v1/auth/password/forgot'
+      preLoaderRoute: typeof ApiV1AuthPasswordForgotRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/password/reset': {
+      id: '/api/v1/auth/password/reset'
+      path: '/api/v1/auth/password/reset'
+      fullPath: '/api/v1/auth/password/reset'
+      preLoaderRoute: typeof ApiV1AuthPasswordResetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/email/verification/confirm': {
+      id: '/api/v1/auth/email/verification/confirm'
+      path: '/api/v1/auth/email/verification/confirm'
+      fullPath: '/api/v1/auth/email/verification/confirm'
+      preLoaderRoute: typeof ApiV1AuthEmailVerificationConfirmRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/email/verification/request': {
+      id: '/api/v1/auth/email/verification/request'
+      path: '/api/v1/auth/email/verification/request'
+      fullPath: '/api/v1/auth/email/verification/request'
+      preLoaderRoute: typeof ApiV1AuthEmailVerificationRequestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/oauth/$provider/callback': {
+      id: '/api/v1/auth/oauth/$provider/callback'
+      path: '/api/v1/auth/oauth/$provider/callback'
+      fullPath: '/api/v1/auth/oauth/$provider/callback'
+      preLoaderRoute: typeof ApiV1AuthOauthProviderCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/auth/oauth/$provider/start': {
+      id: '/api/v1/auth/oauth/$provider/start'
+      path: '/api/v1/auth/oauth/$provider/start'
+      fullPath: '/api/v1/auth/oauth/$provider/start'
+      preLoaderRoute: typeof ApiV1AuthOauthProviderStartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
+  ApiV1AuthCsrfRoute: ApiV1AuthCsrfRoute,
+  ApiV1AuthLoginRoute: ApiV1AuthLoginRoute,
+  ApiV1AuthLogoutRoute: ApiV1AuthLogoutRoute,
+  ApiV1AuthRegisterRoute: ApiV1AuthRegisterRoute,
+  ApiV1AuthSessionRoute: ApiV1AuthSessionRoute,
+  ApiV1AuthPasswordForgotRoute: ApiV1AuthPasswordForgotRoute,
+  ApiV1AuthPasswordResetRoute: ApiV1AuthPasswordResetRoute,
+  ApiV1AuthEmailVerificationConfirmRoute:
+    ApiV1AuthEmailVerificationConfirmRoute,
+  ApiV1AuthEmailVerificationRequestRoute:
+    ApiV1AuthEmailVerificationRequestRoute,
+  ApiV1AuthOauthProviderCallbackRoute: ApiV1AuthOauthProviderCallbackRoute,
+  ApiV1AuthOauthProviderStartRoute: ApiV1AuthOauthProviderStartRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

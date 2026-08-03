@@ -1,3 +1,16 @@
 # wiant
 
-self-hosted a-z postgres orchestration platform
+Self-hosted PostgreSQL orchestration platform.
+
+## Local setup
+
+1. Copy `.env.example` to `.env` and replace `CSRF_SECRET` with a value (at least 32 characters).
+2. Run `docker compose up -d db mailpit`.
+3. Run `just migrate_up`, then `just dev_server` and `just dev_web`.
+4. Open the web app at `http://localhost:3000`.
+
+The API listens on port 3001 by default. Browser API calls use `VITE_API_URL` from `web/.env`; if it is absent the client defaults to `http://localhost:3001/api/v1`.
+
+## Generated code
+
+Run `just generate` after changing database queries or `server/api/openapi.yaml`. sqlc writes the Go query package under `server/internal/database`; OpenAPI TypeScript types are written to `web/src/lib/api-schema.ts`.

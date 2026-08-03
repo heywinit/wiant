@@ -12,6 +12,14 @@ build_go:
   (cd agent && go build -o ../../bin/agent ./...)
   (cd server && go build -o ../../bin/server ./...)
 
+docker_up:
+  @echo "Starting Docker services..."
+  docker compose up -d db mailpit
+
+docker_down:
+  @echo "Stopping Docker services..."
+  docker compose down
+
 dev_agent:
   @echo "Running agent..."
   (cd agent && go run ./...)

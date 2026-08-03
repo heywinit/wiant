@@ -452,14 +452,18 @@ func (h *Handler) oauthConfig(provider string) (*oauth2.Config, error) {
 		if h.cfg.GoogleClientID == "" || h.cfg.GoogleSecret == "" {
 			return nil, errors.New("google OAuth is not configured")
 		}
-		return &oauth2.Config{ClientID: h.cfg.GoogleClientID, ClientSecret: h.cfg.GoogleSecret, RedirectURL: h.cfg.APIPublicURL + "/api/v1/auth/oauth/google/callback", Endpoint: endpoints.Google, Scopes: []string{oidc.ScopeOpenID, "email", "profile"}}, nil
+		return &oauth2.Config{ClientID: h.cfg.GoogleClientID, ClientSecret: h.cfg.GoogleSecret, RedirectURL: h.oauthCallbackURL("google"), Endpoint: endpoints.Google, Scopes: []string{oidc.ScopeOpenID, "email", "profile"}}, nil
 	case "github":
 		if h.cfg.GitHubClientID == "" || h.cfg.GitHubSecret == "" {
 			return nil, errors.New("github OAuth is not configured")
 		}
-		return &oauth2.Config{ClientID: h.cfg.GitHubClientID, ClientSecret: h.cfg.GitHubSecret, RedirectURL: h.cfg.APIPublicURL + "/api/v1/auth/oauth/github/callback", Endpoint: endpoints.GitHub, Scopes: []string{"read:user", "user:email"}}, nil
+		return &oauth2.Config{ClientID: h.cfg.GitHubClientID, ClientSecret: h.cfg.GitHubSecret, RedirectURL: h.oauthCallbackURL("github"), Endpoint: endpoints.GitHub, Scopes: []string{"read:user", "user:email"}}, nil
 	}
 	return nil, errors.New("unknown provider")
+}
+
+func (h *Handler) oauthCallbackURL(provider string) string {
+	return h.cfg.WebOrigin + "/api/v1/auth/oauth/" + provider + "/callback"
 }
 
 func (h *Handler) fetchIdentity(ctx context.Context, provider, code string, attempt oauthAttempt) (providerIdentity, error) {

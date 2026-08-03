@@ -97,7 +97,7 @@ paths:
               required: [token, password]
               properties:
                 token: { type: string }
-                password: { type: string, minLength: 15, maxLength: 128 }
+                password: { type: string, minLength: 8, maxLength: 128 }
       responses:
         "200": { $ref: "#/components/responses/Session" }
         "422": { $ref: "#/components/responses/Error" }
@@ -155,7 +155,7 @@ components:
       required: [email, password]
       properties:
         email: { type: string, format: email }
-        password: { type: string, minLength: 15, maxLength: 128 }
+        password: { type: string, minLength: 8, maxLength: 128 }
     EmailRequest:
       type: object
       additionalProperties: false

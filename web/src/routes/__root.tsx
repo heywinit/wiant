@@ -1,8 +1,10 @@
-import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
-import { ThemeProvider } from "@/components/theme-provider";
-import appCss from "../styles.css?url";
+import { TanStackDevtools } from "@tanstack/react-devtools"
+import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router"
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toast"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import appCss from "../styles.css?url"
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -32,7 +34,7 @@ export const Route = createRootRoute({
 		</main>
 	),
 	shellComponent: RootDocument,
-});
+})
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
@@ -42,21 +44,25 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				<ThemeProvider defaultTheme="system" storageKey="theme">
-					{children}
-					<TanStackDevtools
-						config={{
-							position: "bottom-right",
-						}}
-						plugins={[
-							{
-								name: "Tanstack Router",
-								render: <TanStackRouterDevtoolsPanel />,
-							},
-						]}
-					/>
+					<TooltipProvider>
+						<Toaster>
+							{children}
+							<TanStackDevtools
+								config={{
+									position: "bottom-right",
+								}}
+								plugins={[
+									{
+										name: "Tanstack Router",
+										render: <TanStackRouterDevtoolsPanel />,
+									},
+								]}
+							/>
+						</Toaster>
+					</TooltipProvider>
 					<Scripts />
 				</ThemeProvider>
 			</body>
 		</html>
-	);
+	)
 }
