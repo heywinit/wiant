@@ -5,7 +5,7 @@ import (
 	"log/slog"
 )
 
-type contextKey struct{};
+type contextKey struct{}
 
 func WithLogger(ctx context.Context, logger *slog.Logger) context.Context {
 	return context.WithValue(ctx, contextKey{}, logger)

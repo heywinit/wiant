@@ -43,7 +43,7 @@ func Load() (Config, error) {
 		GitHubClientID: os.Getenv("GITHUB_CLIENT_ID"), GitHubSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
 
 		SMTPHost: env("SMTP_HOST", "localhost"), SMTPUser: os.Getenv("SMTP_USER"),
-		SMTPPassword: os.Getenv("SMTP_PASSWORD"), SMTPFrom: env("SMTP_FROM", "Wiant <no-reply@localhost>"),
+		SMTPPassword: os.Getenv("SMTP_PASSWORD"), SMTPFrom: env("SMTP_FROM", "Prowl <no-reply@localhost>"),
 	}
 
 	var err error

@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/heywinit/wiant/server/internal/database"
-	"github.com/heywinit/wiant/server/internal/securetoken"
+	"github.com/heywinit/prowl/server/internal/database"
+	"github.com/heywinit/prowl/server/internal/securetoken"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"

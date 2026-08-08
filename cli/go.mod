@@ -1,3 +1,3 @@
-module github.com/heywinit/wiant/cli
+module github.com/heywinit/prowl/cli
 
 go 1.26.3

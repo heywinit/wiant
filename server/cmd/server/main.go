@@ -11,9 +11,9 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/heywinit/wiant/server/config"
-	"github.com/heywinit/wiant/server/internal/auth"
-	wiantMiddleware "github.com/heywinit/wiant/server/internal/middleware"
+	"github.com/heywinit/prowl/server/config"
+	"github.com/heywinit/prowl/server/internal/auth"
+	prowlMiddleware "github.com/heywinit/prowl/server/internal/middleware"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -63,7 +63,7 @@ func main() {
 func prepareHandler(cfg config.Config, pool *pgxpool.Pool, logger *slog.Logger) http.Handler {
 	r := chi.NewRouter()
 
-	r.Use(middleware.RequestID, middleware.ClientIPFromRemoteAddr, wiantMiddleware.RequestLogger(logger), middleware.Recoverer)
+	r.Use(middleware.RequestID, middleware.ClientIPFromRemoteAddr, prowlMiddleware.RequestLogger(logger), middleware.Recoverer)
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	authHandler := auth.NewHandler(cfg, auth.NewStore(pool), auth.NewSMTPMailer(cfg), logger)
@@ -72,7 +72,7 @@ func prepareHandler(cfg config.Config, pool *pgxpool.Pool, logger *slog.Logger) 
 	})
 
 	r.Get("/healthz", func(w http.ResponseWriter, _ *http.Request) {
-		_, _ = w.Write([]byte("wiant"))
+		_, _ = w.Write([]byte("prowl"))
 	})
 
 	return r

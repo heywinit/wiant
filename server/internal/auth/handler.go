@@ -16,16 +16,16 @@ import (
 
 	"github.com/coreos/go-oidc/v3/oidc"
 	"github.com/go-chi/chi/v5"
-	"github.com/heywinit/wiant/server/config"
-	"github.com/heywinit/wiant/server/internal/httpapi"
-	"github.com/heywinit/wiant/server/internal/securetoken"
+	"github.com/heywinit/prowl/server/config"
+	"github.com/heywinit/prowl/server/internal/httpapi"
+	"github.com/heywinit/prowl/server/internal/securetoken"
 	"github.com/jackc/pgx/v5/pgconn"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/endpoints"
 )
 
-const sessionCookie = "wiant_session"
-const csrfCookie = "wiant_csrf"
+const sessionCookie = "prowl_session"
+const csrfCookie = "prowl_csrf"
 
 type Handler struct {
 	cfg    config.Config
@@ -262,7 +262,7 @@ func (h *Handler) sendVerification(ctx context.Context, user User) error {
 	}
 
 	link := h.cfg.WebOrigin + "/verify-email?token=" + url.QueryEscape(token)
-	return h.mailer.Send(ctx, user.Email, "Verify your Wiant email", "Verify your email by opening this link:\n\n"+link+"\n\nThis link expires in 24 hours.")
+	return h.mailer.Send(ctx, user.Email, "Verify your Prowl email", "Verify your email by opening this link:\n\n"+link+"\n\nThis link expires in 24 hours.")
 }
 
 func (h *Handler) confirmVerification(w http.ResponseWriter, r *http.Request) {
@@ -295,7 +295,7 @@ func (h *Handler) forgotPassword(w http.ResponseWriter, r *http.Request) {
 		token, tokenErr := h.store.createAuthToken(r.Context(), user.ID, "reset_password", time.Hour)
 		if tokenErr == nil {
 			link := h.cfg.WebOrigin + "/reset-password?token=" + url.QueryEscape(token)
-			tokenErr = h.mailer.Send(r.Context(), user.Email, "Reset your Wiant password", "Reset your password by opening this link:\n\n"+link+"\n\nThis link expires in one hour.")
+			tokenErr = h.mailer.Send(r.Context(), user.Email, "Reset your Prowl password", "Reset your password by opening this link:\n\n"+link+"\n\nThis link expires in one hour.")
 		}
 
 		if tokenErr != nil {
@@ -468,7 +468,7 @@ func (h *Handler) oauthCallbackURL(provider string) string {
 
 func (h *Handler) fetchIdentity(ctx context.Context, provider, code string, attempt oauthAttempt) (providerIdentity, error) {
 	// Provider tokens are used only long enough to establish a stable subject and
-	// verified email. They are intentionally not returned to or stored by Wiant.
+	// verified email. They are intentionally not returned to or stored by Prowl.
 	cfg, err := h.oauthConfig(provider)
 	if err != nil {
 		return providerIdentity{}, err

@@ -7,7 +7,7 @@ import (
 	"net/mail"
 	"net/smtp"
 
-	"github.com/heywinit/wiant/server/config"
+	"github.com/heywinit/prowl/server/config"
 )
 
 type Mailer interface {

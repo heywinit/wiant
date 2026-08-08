@@ -51,5 +51,5 @@ compatibility_issue {
   affected_nodes: node_id[]
   affected_databases: database_id[]
   message: string                    - human readable, shown in canvas
-  auto_resolvable: boolean           - can wiant fix this without user input?
+  auto_resolvable: boolean           - can prowl fix this without user input?
 }

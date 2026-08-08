@@ -1,4 +1,4 @@
-module github.com/heywinit/wiant/server
+module github.com/heywinit/prowl/server
 
 go 1.26.3
 
